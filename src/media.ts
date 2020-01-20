@@ -170,12 +170,19 @@ function mediaMapperMusicSong(item: (string | null | undefined)[]): OGMusicSong 
 }
 
 function mediaMapper(item: (string | null | undefined)[]): OGImage | OGVideo {
-  return {
+  const out = {
     url: item[0]!,
     width: Number(item[1]),
     height: Number(item[2]),
     type: item[3]!,
   }
+  if (out.width === null || isNaN(out.width)) {
+    delete out.width
+  }
+  if (out.height === null || isNaN(out.height)) {
+    delete out.height
+  }
+  return out
 }
 
 function mediaSorter(a: OGMedia, b: OGMedia) {

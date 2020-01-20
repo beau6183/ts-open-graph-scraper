@@ -2,9 +2,6 @@ import {
   OptionsWithUrl,
   FullResponse,
 } from 'request-promise-native'
-import {
-  OGError,
-} from './error'
 
 export type IgnoredRequestPromiseProperties =
   'callback' |
@@ -20,12 +17,6 @@ export type OGOptions = Omit<OptionsWithUrl, IgnoredRequestPromiseProperties> & 
   protocol?: string | null,
   withCharset?: boolean,
   url?: string,
-}
-
-export type OGResponse = {
-  data: OGData,
-  requestUrl: string,
-  success: true,
 }
 
 export type OGMedia = {
@@ -76,18 +67,8 @@ export type OGData = {
   response?: FullResponse,
 } & Omit<OGDataRaw, 'ogImage' | 'ogVideo' | 'twitterImage' | 'twitterPlayer' | 'musicSong'>
 
-export type OGResult = {
-  requestUrl: string,
-  response?: FullResponse,
-}
-
-export type OGCallback = (
-  error?: OGError | null,
-  data?: OGData | null,
-  response?: FullResponse | null,
-) => void
-
-export type OGFields = 'musicAlbum' |
+export type OGFields =
+  'musicAlbum' |
   'musicAlbumDisc' |
   'musicAlbumTrack' |
   'musicCreator' |
@@ -153,4 +134,31 @@ export type OGFields = 'musicAlbum' |
   'twitterPlayerWidth' |
   'twitterSite' |
   'twitterSiteId' |
-  'twitterTitle'
+  'twitterTitle' |
+  'videoActor' |
+  'videoActorRole' |
+  'videoDirector' |
+  'videoWriter' |
+  'videoDuration' |
+  'videoReleaseDate' |
+  'videoTag' |
+  'videoSeries' |
+  'articlePublishedTime' |
+  'articleModifiedTime' |
+  'articleExpirationTime' |
+  'articleAuthor' |
+  'articlePublishedTime' |
+  'articleTag' |
+  'bookAuthor' |
+  'bookTag' |
+  'bookIsbn' |
+  'bookReleaseDate' |
+  'profileFirstName' |
+  'profileLastName' |
+  'profileUsername' |
+  'profileGender' |
+  'author' |
+  'keywords' |
+  'description' |
+  'copyright' |
+  'applicationName'

@@ -50,7 +50,7 @@ async function setOptionsAndReturnOpenGraphResults(_optionsOrUrl: OGOptions | st
     options.url = validate.returnInputUrl
     options.timeout = validate.returnInputTimeout
     options.headers = {
-      'user-agent': 'request.js',
+      // 'User-Agent': 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
       ... options.headers,
     }
 
@@ -129,7 +129,7 @@ async function requestAndResultsFormatter(_options: OGOptions) {
       const char = charset(response.headers, formatBody, peekSize) || chardet.detect(formatBody)
       if (char) {
         try {
-          formatBody = iconv.decode(formatBody, char)
+          formatBody = iconv.decode(Buffer.from(formatBody), char)
         } catch (ex) {
           throw new OGError(undefined, ex, response)
         }
@@ -158,12 +158,15 @@ async function requestAndResultsFormatter(_options: OGOptions) {
  */
 function extractMetaTags(body: string | Buffer, options: OGOptions) {
   const $ = cheerio.load(body)
-  const meta = $('meta').toArray()
-  // const fieldNames = fields.map((x) => x.fieldName)
+  const validFieldNames = fields.map((x) => x.property)
+  const meta = $('meta').toArray().filter((x) => validFieldNames.some((y) => y === x.attribs.property))
+  // console.log(meta)
 
   let ogObjectRaw: OGDataRaw = meta.reduce((acc, element) => {
-    const property = element.attribs.property ?? element.attribs.name
-    const item = fields.find((x) => x.fieldName === property)
+    // console.log({element})
+    const property = element.attribs.property ?? element.attribs.name ??
+      element.attribs['http-equiv'] ?? element.attribs.httpEquiv
+    const item = property && fields.find((x) => x.property === property)
     if (!item) {
       return acc
     }
@@ -173,11 +176,18 @@ function extractMetaTags(body: string | Buffer, options: OGOptions) {
       if (!currentValue) currentValue = [content]
       else currentValue = [... currentValue as string[], content]
     }
-    return {
-      ... acc,
-      [item.fieldName]: content,
+    else {
+      currentValue = currentValue ?? content
     }
+    const out = {
+      ... acc,
+      [item.fieldName]: currentValue,
+    }
+    // console.log(out)
+    return out
   }, {} as OGDataRaw)
+
+  // console.log({ogObjectRaw})
 
   // set the ogImage or fallback to ogImageURL or ogImageSecureURL
   if (!ogObjectRaw.ogImage) {

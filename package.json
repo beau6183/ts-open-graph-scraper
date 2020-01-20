@@ -11,6 +11,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "build": "npm run clean && tsc --project ./tsconfig.json",
+    "build:watch": "npm run clean && tsc --project ./tsconfig.json --watch",
     "clean": "rimraf ./lib"
   },
   "engines": {

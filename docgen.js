@@ -1,11 +1,4 @@
-import { OGFields } from './types'
-
-type FieldMapping = {
-  multiple: boolean,
-  property: string,
-  fieldName: OGFields,
-}
-const fields: FieldMapping[] = [
+const fields = [
   {
     multiple: false,
     property: 'og:title',
@@ -451,26 +444,5 @@ const fields: FieldMapping[] = [
     property: 'profile:gender',
     fieldName: 'profileGender',
   },
-  {
-    multiple: false,
-    property: 'author',
-    fieldName: 'author',
-  },
-  {
-    multiple: false,
-    property: 'keywords',
-    fieldName: 'keywords',
-  },
-  {
-    multiple: false,
-    property: 'copyright',
-    fieldName: 'copyright',
-  },
-  {
-    multiple: false,
-    property: 'application-name',
-    fieldName: 'applicationName',
-  },
 ]
 
-export default fields
