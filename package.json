@@ -6,7 +6,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "coverage": "ts-jest --coverage",
+    "coverage": "jest --coverage",
     "lint": "tslint --project ./tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch",
