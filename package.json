@@ -1,7 +1,7 @@
 {
   "name": "ts-open-graph-scraper",
   "description": "Node.js scraper module for Open Graph and Twitter Card info, based on https://github.com/jshemas/openGraphScraper",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
